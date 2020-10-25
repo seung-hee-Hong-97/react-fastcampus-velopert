@@ -6,7 +6,13 @@ function App() {
     return (
         <div className='App'>
             <Wrapper>
-                <Hello name='react' color='red' />
+                {/* 주석 */}
+                <Hello
+                    // 주석
+                    name='react'
+                    color='red'
+                    isSpecial={true}
+                />
                 <Hello />
             </Wrapper>
         </div>
