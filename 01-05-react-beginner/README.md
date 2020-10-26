@@ -34,6 +34,25 @@ const style = {
 
 6. 주석은 `{/*내용*/}`과 같이 작성한다. - 그런데 HTML attribute를 정의하는 구간에서는 `//`로 주석을 작성한다.
 
+```javascript
+function App() {
+    return (
+        <div className='App'>
+            <Wrapper>
+                {/* 주석 */}
+                <Hello
+                    // 주석
+                    name='react'
+                    color='red'
+                    isSpecial={true}
+                />
+                <Hello />
+            </Wrapper>
+        </div>
+    );
+}
+```
+
 ## 2. Props (properties)
 
 -   특정 값을 부모에서 자식으로 전달해주고자 할 때 작성하는 속성.
@@ -95,5 +114,9 @@ function Wrapper({ children }) {
     return <div style={style}>{children}</div>;
 }
 
-export default Wrapp;
+export default Wrapper;
 ```
+
+## 3. useState를 통한 동적 상태 관리
+
+-   button을 누르면 숫자가 바뀌는 예제 구현

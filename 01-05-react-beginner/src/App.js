@@ -13,6 +13,10 @@ function App() {
                     color='red'
                     isSpecial={true}
                 />
+                <Hello
+                    isSpecial
+                    // 값을 지정하지 않으면 자동으로 true값으로 인식
+                />
                 <Hello />
             </Wrapper>
         </div>
