@@ -120,3 +120,13 @@ export default Wrapper;
 ## 3. useState를 통한 동적 상태 관리
 
 -   button을 누르면 숫자가 바뀌는 예제 구현
+
+## 4. useRef
+
+-   useRef의 값은 바뀌더라도 컴포넌트가 리렌더링되지 않는다.
+
+### 사용 예
+
+-   setTimeout, setInterval의 id
+-   외부 라이브러리를 사용하여 생성된 인스턴스
+-   스크롤의 위치
