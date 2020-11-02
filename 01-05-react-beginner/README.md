@@ -147,3 +147,7 @@ useEffect(() => {
     loadPost(username, urlSlug);
 }, [username, urlSlug]);
 ```
+
+## 6. useMemo
+
+-   성능 최적화

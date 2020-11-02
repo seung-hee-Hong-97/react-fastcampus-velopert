@@ -1,6 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
+
+function countActiveUsers(users) {
+    /*🤷‍♂️
+        문제점: 불필요한 시점에 함수가 호출되어 렌더링된다.
+        CreateUser 컴포넌트에서 input이벤트가 발생될 때에도 지속적으로 호출되고 있음.
+     */
+    console.log('활성 사용자 수를 세는 중...');
+    return users.filter((user) => user.active).length;
+}
 
 function App() {
     const [inputs, setInputs] = useState({
@@ -64,10 +73,17 @@ function App() {
         setUsers(users.map((user) => (user.id === id ? { ...user, active: !user.active } : user)));
     };
 
+    /*
+    🤷‍♂️ userMemo
+    => [배열]에 든 값이 변화가 있을 때에만 지정한 함수가 호출되도록 설정
+    */
+    const count = useMemo(() => countActiveUsers(users), [users]);
+
     return (
         <>
             <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />
             <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
+            <div>활성 사용자 수: {count}</div>
         </>
     );
 }
