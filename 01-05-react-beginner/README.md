@@ -130,3 +130,20 @@ export default Wrapper;
 -   setTimeout, setInterval의 id
 -   외부 라이브러리를 사용하여 생성된 인스턴스
 -   스크롤의 위치
+
+## 5. useEffect
+
+-   리액트 컴포넌트가 처음 나타거나 사라질 때
+-   Props의 업데이트 전후
+-   리런데링이 될 때마다 특정 작업 실행
+
+### 사용 예
+
+-   uri값을 확인하여 컴포넌트가 마운트될 때 REST API를 요청
+    -   게시글번호를 기반으로 포스팅 가져와서 제목, 내용을 컴포넌트에 렌더링
+
+```javascript
+useEffect(() => {
+    loadPost(username, urlSlug);
+}, [username, urlSlug]);
+```
