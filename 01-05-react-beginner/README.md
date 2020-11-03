@@ -150,4 +150,9 @@ useEffect(() => {
 
 ## 6. useMemo
 
--   성능 최적화
+-   성능의 최적화가 필요한 상황에서 사용.
+-   본 실습에서는 계정명(username)을 클릭하면 active 상태가 true/false로 토글된다.
+-   토글되는 때에만 `활성 사용자 수`를 카운트하는 메서드인 `countActiveUsers` 메서드를 호출하면 된다.
+    -   그러나 useMemo로 최적화하지 않은 상태에서는 입력창에 입력을 할 때에도 리렌더링되기 위해 해당 메서드가 불린다.
+    -   따라서 `useMemo(countActiveUsers(users), [users])`와 같이 작성하여 불필요한 연산을 하지 않도록 방지한다.
+    -   위와 같이 useMemo를 적용한 이후에는 토글이 된 때`(=users가 바뀐 경우)`에만 해당 메서드가 호출된다.
