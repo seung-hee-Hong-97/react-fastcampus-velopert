@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
 
@@ -39,15 +39,22 @@ function App() {
     ]);
     const nextId = useRef(4); // 새로운 항목을 추가할 때는 id가 4인 것부터 시작
 
-    const onChange = ({ target }) => {
-        const { name, value } = target;
-        setInputs({
-            ...inputs,
-            [name]: value,
-        });
-    };
+    const onChange = useCallback(
+        ({ target }) => {
+            const { name, value } = target;
+            setInputs({
+                ...inputs,
+                [name]: value,
+            });
+        },
+        /*
+        🤷‍♂️ useCallback (함수를 위한 초ㅓㅣ적화)
+        inputs가 변할 때에만 함수를 다시 만들어 반환하고 변동사항이 없으면 이전에 반환된 함수를 재사용한다.         
+         */
+        [inputs]
+    );
 
-    const onCreate = () => {
+    const onCreate = useCallback(() => {
         /*
           🤷‍♂️ useRef: useState로 굳이 관리할 필요가  없는 요소
           즉, 해당 값이 바뀌더라도 렌더링이 될 필요가 없는 요소는 useState보다는 useRef로 관리하는 것이 좋다
@@ -63,15 +70,27 @@ function App() {
             email: '',
         });
         nextId.current += 1;
-    };
+        /*
+            🤷‍♂️
+            useCallback이 감싸인 곳에서 참조되고 있는 사항(변수, 함수 등)을 모두 depths([]).에 기재해야 한다.
+        */
+    }, [username, email, users]);
 
-    const onRemove = (id) => {
-        setUsers(users.filter((user) => user.id !== id));
-    };
+    const onRemove = useCallback(
+        (id) => {
+            setUsers(users.filter((user) => user.id !== id));
+        },
+        [users]
+    );
 
-    const onToggle = (id) => {
-        setUsers(users.map((user) => (user.id === id ? { ...user, active: !user.active } : user)));
-    };
+    const onToggle = useCallback(
+        (id) => {
+            setUsers(
+                users.map((user) => (user.id === id ? { ...user, active: !user.active } : user))
+            );
+        },
+        [users]
+    );
 
     /*
     🤷‍♂️ userMemo
