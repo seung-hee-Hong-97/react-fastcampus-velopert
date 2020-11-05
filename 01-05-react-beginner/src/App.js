@@ -64,7 +64,7 @@ function App() {
             username,
             email,
         };
-        setUsers([...users, user]);
+        setUsers((users) => [...users, user]);
         setInputs({
             username: '',
             email: '',
@@ -74,23 +74,17 @@ function App() {
             🤷‍♂️
             useCallback이 감싸인 곳에서 참조되고 있는 사항(변수, 함수 등)을 모두 depths([]).에 기재해야 한다.
         */
-    }, [username, email, users]);
+    }, [username, email]);
 
-    const onRemove = useCallback(
-        (id) => {
-            setUsers(users.filter((user) => user.id !== id));
-        },
-        [users]
-    );
+    const onRemove = useCallback((id) => {
+        setUsers((users) => users.filter((user) => user.id !== id));
+    }, []);
 
-    const onToggle = useCallback(
-        (id) => {
-            setUsers(
-                users.map((user) => (user.id === id ? { ...user, active: !user.active } : user))
-            );
-        },
-        [users]
-    );
+    const onToggle = useCallback((id) => {
+        setUsers((users) =>
+            users.map((user) => (user.id === id ? { ...user, active: !user.active } : user))
+        );
+    }, []);
 
     /*
     🤷‍♂️ userMemo

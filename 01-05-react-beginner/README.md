@@ -178,3 +178,17 @@ useEffect(() => {
         -   이전과 변함이 없다면 굳이 함수를 재실행하여 똑같은 결괏값을 만들지 않고 이전에 실행한 결과를 참조
 
 📢 어떤 상황에서 `useCallback`을 사용하고 `useMemo`를 사용해야 하는지 헷갈릴 수도 있을 테니 주의하자!
+
+## 8. React.memo (📌 다시 듣기)
+
+🎵 feat. [useState의 함수형 업데이트](https://react.vlpt.us/basic/07-useState.html)
+
+-   Props가 바뀌었을 때만 다시 렌더링
+-   현재 프로젝트에서 `UserList`, `User` 컴포넌트는 Props가 바뀌지 않았을 떄 🎨리렌더링을 방지하도록 설정했는데 문제가 있다..
+    -   그런데 App.js에 `onRemove`, `onToggle`에는 `users`를 Dependency로 가지고 있다.
+        -   여기서 Dependency로 가진 `users`의 배열이 바뀌면 `onToggle`도 새로 바뀐다.
+            -   이때 `UserList`입장에서는 `users`의 구성이 바뀌었으므로 🎨리렌더링한다.
+            -   `User` 컴포넌트도 마찬가지로 `onToggle`, `onRemove`가 바뀌었으므로 🎨리렌더링을 수행한다.
+    -   이러한 문제를 해결하기 위해서는 `Dependency`로써 `users`를 참조하지 말고  
+        [useState의 함수형 업데이트](https://react.vlpt.us/basic/07-useState.html)를 수행하는 것이다.
+-   모든 컴포넌트에 적용하는 것이 아니라 최적화가 필요하다고 생각되는 컴포넌트에 한해 적용한다.

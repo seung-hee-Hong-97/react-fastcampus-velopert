@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 /* 새로운 컴포넌트 */
-function User({ user, onRemove, onToggle }) {
+const User = React.memo(function User({ user, onRemove, onToggle }) {
     const { username, email, id, active } = user;
     useEffect(() => {
         console.log('📢 user 컴포넌트 렌더링됨', user);
@@ -37,7 +37,7 @@ function User({ user, onRemove, onToggle }) {
             <button onClick={() => onRemove(id)}>삭제</button>
         </div>
     );
-}
+});
 
 function UserList({ users, onRemove, onToggle }) {
     return (
@@ -49,4 +49,11 @@ function UserList({ users, onRemove, onToggle }) {
     );
 }
 
-export default UserList;
+export default React.memo(
+    UserList,
+    /* 🤷‍♂️
+        이전 Props와 다음 Props의 특정 속성을 비교하여
+        동일한 값이라면 리렌더링하지 않도록 다음과 같이 설정할 수도 있음.
+    */
+    (prevProps, nextProps) => nextProps.users === prevProps.users
+);
