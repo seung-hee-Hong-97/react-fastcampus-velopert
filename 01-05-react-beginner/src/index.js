@@ -7,8 +7,7 @@ import Counter from './Counter';
 
 ReactDOM.render(
     <React.StrictMode>
-        {/* <App /> */}
-        <Counter />
+        <App />
     </React.StrictMode>,
     document.getElementById('root')
 );

@@ -226,3 +226,12 @@ useEffect(() => {
     ```
     -   `number`: 현재 상태
     -   `dispatch`: 액션을 발생시키는 함수 (dispatch: 급파하다, 보내다)
+
+### useReducer vs useState
+
+어떨 때 `useReducer`를 쓰고 어떨 때 `useState`를 사용할까?
+
+-   컴포넌트에서 관리하는 값이 여러 개여서 상태의 구조가 복잡해진다면? `useReducer`가 좋다.
+-   단순한 컴포넌트의 값이고 문자, 숫자, 불린 형이라면 `useState`가 좋다.
+
+그러나 이럴 때는 `무조건` 둘 중 하나가 100% 정답이 될 수는 없다.
