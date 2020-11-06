@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
+
+function reducer(state, action) {
+    /*
+        state: 여기서 state는 숫자 형식으로서 사용할 것이다.
+        action: INCREMENT, DECREMENT만 사용
+    */
+    switch (action.type) {
+        case 'INCREMENT':
+            return state + 1;
+        case 'DECREMENT':
+            return state - 1;
+        //위의 case 이외의 type이 들어오면 오류를 발생시킨다.
+        default:
+            throw new Error('Unhandled action');
+        // 또는 return state;
+    }
+}
 
 function Counter() {
-    const [number, setNumber] = useState(0);
-    /* 
-        🤷‍♂️ 잠깐만! 위의 코드를 디스트럭처링하지 않는다면?
-            다음과 같이 작성한다!
-        const numberState = useState(0);
-        const number = numberState[0];
-        const setNumber = numberState[1];
-     */
+    const [number, dispatch] = useReducer(reducer, 0);
+
     const onIncrease = () => {
-        // setNumber(number + 1);
-        // 리액트 컴포넌트를 최적화하는 단계에서는 📢 업데이트 함수를 사용해야 함.
-        setNumber((prevNumber) => prevNumber + 1); // 📢 업데이트 함수
+        dispatch({
+            type: 'INCREMENT',
+        });
     };
     const onDecrease = () => {
-        setNumber(number - 1);
+        dispatch({
+            type: 'DECREMENT',
+        });
     };
     return (
         <div>

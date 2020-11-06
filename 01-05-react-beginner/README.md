@@ -17,7 +17,7 @@
 3.  `{}`로 감싸면 js의 상수 변수를 보여줄 수 있다.
 4.  HTML에서 style을 설정하는 것과는 달리 자바스크립트 객체로 작성해야 한다. (with Camel Case)
 
-```javascript
+```js
 const style = {
     backgroundColor: 'black',
     padding: '1rem',
@@ -26,7 +26,7 @@ const style = {
 
 5. JSX에서는 `class` 대신 `className`으로 클래스를 부여해야 한다.
 
-```javascript
+```js
 <>
     <div className='gray-box'></div>
 </>
@@ -34,7 +34,7 @@ const style = {
 
 6. 주석은 `{/*내용*/}`과 같이 작성한다. - 그런데 HTML attribute를 정의하는 구간에서는 `//`로 주석을 작성한다.
 
-```javascript
+```js
 function App() {
     return (
         <div className='App'>
@@ -61,7 +61,7 @@ function App() {
 
     - 그런데 이는 비구조화 할당 식으로 다음과 같이 간소하게 작성이 가능하다.
 
-    ```javascript
+    ```js
     function Hello({ color, name }) {
         // props로 작성해도 되지만 구조분해를 해도 된다.
         console.log('🌍', name);
@@ -79,7 +79,7 @@ function App() {
 
 2. 컴포넌트명.defaultProps로 전달받지 못한 값에 관해 기본값을 설정할 수 있다.
 
-```javascript
+```js
 Hello.defaultProps = {
     name: '이름없음',
     color: 'blue',
@@ -90,7 +90,7 @@ Hello.defaultProps = {
 
 💾 App.js
 
-```javascript
+```js
 function App() {
     return (
         <div className='App'>
@@ -105,7 +105,7 @@ function App() {
 
 💾 Wrapper.js
 
-```javascript
+```js
 function Wrapper({ children }) {
     const style = {
         border: '2px solid black',
@@ -142,7 +142,7 @@ export default Wrapper;
 -   uri값을 확인하여 컴포넌트가 마운트될 때 REST API를 요청
     -   게시글번호를 기반으로 포스팅 가져와서 제목, 내용을 컴포넌트에 렌더링
 
-```javascript
+```js
 useEffect(() => {
     loadPost(username, urlSlug);
 }, [username, urlSlug]);
@@ -192,3 +192,37 @@ useEffect(() => {
     -   이러한 문제를 해결하기 위해서는 `Dependency`로써 `users`를 참조하지 말고  
         [useState의 함수형 업데이트](https://react.vlpt.us/basic/07-useState.html)를 수행하는 것이다.
 -   모든 컴포넌트에 적용하는 것이 아니라 최적화가 필요하다고 생각되는 컴포넌트에 한해 적용한다.
+
+## 9. useReducer
+
+💾 Counter.js를 참조
+
+-   상태 업데이트 로직은 컴포넌트 밖으로 분리하여 저장할 수 있음.
+-   형식
+    ```js
+    dispatch({
+        type: 'increment',
+        diff: 4,
+    });
+    ```
+-   `reducer`: 상태를 업데이트하는 함수
+    ```js
+    //현재 상태와 액션 객체를 받아와서 업데이트된 상태를 반환하는 함수
+    function reducer(state, action) {
+        switch (action.type) {
+            case 'INCREMENT':
+                return state + 1;
+            case 'DECREMENT':
+                return state - 1;
+            default:
+                return state;
+        }
+    }
+    ```
+-   사용법
+    ```js
+    // reducer함수와 기본값을 초깃값으로 설정
+    const [number, dispatch] = useReducer(reducer, 0);
+    ```
+    -   `number`: 현재 상태
+    -   `dispatch`: 액션을 발생시키는 함수 (dispatch: 급파하다, 보내다)
