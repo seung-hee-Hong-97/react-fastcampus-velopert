@@ -1,6 +1,7 @@
 import React, { useRef, useReducer, useMemo, useCallback } from 'react';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
+import useInputs from './useInputs';
 
 function countActiveUsers(users) {
     /*🤷‍♂️
@@ -79,7 +80,7 @@ function App() {
             },
         });
         nextId.current += 1;
-        reset();
+        reset(initialState);
     }, [username, email, reset]);
 
     const onToggle = useCallback((id) => {
