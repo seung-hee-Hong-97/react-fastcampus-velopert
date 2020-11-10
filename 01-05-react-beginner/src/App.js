@@ -1,4 +1,5 @@
 import React, { useRef, useReducer, useMemo, useCallback, createContext } from 'react';
+import produce from 'immer';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
 import useInputs from './useInputs';
@@ -34,27 +35,43 @@ const initialState = {
         },
     ],
 };
-
+/*
+🤷‍♂️ immer를 사용한 경우 (불변성을 유지)
+    - 필수적으로 사용해야 하는 라이브러리는 아님
+    - 불변성을 유지하되 구현하기 까다롭거나 코드의 가독성이 떨어진다면 이 라이브러리를 동원하여 코드를 작성.
+    - TODO: 이 라이브러리는 나중에 다시 배우자.
+    - 사용한다고 하더라도 꼭 필요한 경우에만 사용하는 편이 낫다. 
+*/
 function reducer(state, action) {
     switch (action.type) {
         case 'CREATE_USER':
-            return {
-                ...state,
-                inputs: initialState.inputs,
-                users: state.users.concat(action.user),
-            };
+            return produce(state, (draft) => {
+                draft.users.push(action.user);
+            });
+        // return {
+        //     ...state,
+        //     inputs: initialState.inputs,
+        //     users: state.users.concat(action.user),
+        // };
         case 'TOGGLE_USER':
-            return {
-                ...state,
-                users: state.users.map((user) =>
-                    user.id === action.id ? { ...user, active: !user.active } : user
-                ),
-            };
+            return produce(state, (draft) => {
+                const user = draft.users.find((user) => user.id === action.id);
+                user.active = !user.active;
+            });
+        // return {
+        //     ...state,
+        //     users: state.users.map((user) =>
+        //         user.id === action.id ? { ...user, active: !user.active } : user
+        //     ),
+        // };
         case 'REMOVE_USER':
-            return {
-                ...state,
-                users: state.users.filter((user) => user.id !== action.id),
-            };
+            return produce(state, (draft) => {
+                draft.users.filter((user) => user.id !== action.id);
+            });
+        // return {
+        //     ...state,
+        //     users: state.users.filter((user) => user.id !== action.id),
+        // };
         default:
             throw new Error('Unhandled action');
     }
