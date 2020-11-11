@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Counter from './Counter';
-import ContextSample from './ContextSample';
+import Hello from './Hello';
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        {/* <App /> */}
+        <Hello />
     </React.StrictMode>,
     document.getElementById('root')
 );
