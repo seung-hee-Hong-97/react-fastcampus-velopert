@@ -180,3 +180,35 @@ function Button({ children, ...rest }) {
     return <button {...rest}>{children}</button>;
 }
 ```
+
+## 4. CSS MODULES
+
+-   컴포넌트를 스타일링할 때 CSS MODULES기술을 이용하면 class 이름이 겹치는 것을 방지할 수 있다.
+-   css 파일의 이름을 `.module.css`로 끝내면 된다.
+-   별도의 npm 패키지를 설치할 필요가 없다.
+-   📢다음의 상황에서 도입하면 좋다.
+    -   레거시 프로젝트에 리액트를 도입할 때
+    -   CSS 클래스 네이밍 규칙을 만들기가 귀찮을 때
+
+💾 Box.module.css
+
+```css
+.Box {
+    background: black;
+    color: white;
+    padding: 2rem;
+}
+```
+
+💾 Box.js
+
+```js
+import React from 'react';
+import styles from './Box.module.css';
+function Box() {
+    return <div className={styles.Box}>{styles.Box}</div>;
+}
+export default Box;
+```
+
+-   위와 같이 지정한다면 `_src_Box_module__Box`와 같이 클래스 이름이 고유화되어 클래스명이 지정된다.
