@@ -52,3 +52,40 @@ nav {
     }
 }
 ```
+
+## 2. SCSS의 기능
+
+### @mixin
+
+-   특정 값만 다르고 반복되는 속성을 지정할 때 사용
+
+```scss
+//반복되는 속성은 다음의 mixin을 사용하여 재활용할 수 있음.
+@mixin button-color($color) {
+    background: $color;
+    &:hover {
+        background: lighten($color, 10%);
+    }
+    &:active {
+        background: darken($color, 10%);
+    }
+}
+```
+
+### @include
+
+-   mixin으로 정의한 속성을 이용하여 속성을 적용하기 위해 사용
+
+```scss
+&.blue {
+    @include button-color($blue);
+}
+
+&.gray {
+    @include button-color($gray);
+}
+
+&.pink {
+    @include button-color($pink);
+}
+```

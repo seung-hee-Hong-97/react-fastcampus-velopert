@@ -1,4 +1,17 @@
 $blue: #228be6;
+$gray: #495057;
+$pink: #f06595;
+
+//반복되는 속성은 다음의 mixin을 사용하여 재활용할 수 있음.
+@mixin button-color($color) {
+    background: $color;
+    &:hover {
+        background: lighten($color, 10%);
+    }
+    &:active {
+        background: darken($color, 10%);
+    }
+}
 
 .Button {
     display: inline-flex;
@@ -28,12 +41,16 @@ $blue: #228be6;
         font-size: 0.875rem;
     }
 
-    background: $blue;
-    &:hover {
-        background: lighten($blue, 10%);
+    &.blue {
+        @include button-color($blue);
     }
-    &:active {
-        background: darken($blue, 10%);
+
+    &.gray {
+        @include button-color($gray);
+    }
+
+    &.pink {
+        @include button-color($pink);
     }
 
     & + & {
