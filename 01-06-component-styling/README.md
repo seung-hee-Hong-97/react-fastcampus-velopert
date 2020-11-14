@@ -89,3 +89,94 @@ nav {
     @include button-color($pink);
 }
 ```
+
+## 3. 기타
+
+### 컴포넌트의 rest props
+
+-   예를들어 해당 컴포넌트의 `onClick`이벤트를 지정하고자 한다면 다음과 같이 선언하면 된다.
+
+💾 App.js
+
+```js
+return (
+    <Button
+        onClick={() => {
+            console.log('클릭 이벤트 발생');
+        }}
+    >
+        버튼
+    </Button>
+);
+```
+
+💾 Button.js
+
+```js
+function Button({ children, onClick }) {
+    return <button onClick={onClick}>{children}</button>;
+}
+```
+
+-   그런데 문제는, `onMouseMove`, `onMouseDown`, `onMouseUp` 등 유동적으로 Props 추가가 필요한 경우이다.
+-   그렇다면 가장 쉽게 떠오르는 방법은 일일이 이 속성을 지정해주면 될 일이다.
+
+💾 App.js
+
+```js
+return (
+    <Button
+        onClick={() => {
+            console.log('클릭 이벤트 발생');
+        }}
+        onMouseMove={() => {
+            console.log('마우스 움직임');
+        }}
+        onMouseDown={() => {
+            console.log('마우스 다운');
+        }}
+    />
+);
+```
+
+💾 Button.js
+
+```js
+function Button({ children, onClick, onMouseMove, onMouceDown }) {
+    return (
+        <button color onClick={onClick}>
+            {children}
+        </button>
+    );
+}
+```
+
+-   🤷‍♂️ 그렇다면 더 많은 이벤트가 추가된다면 ? 모든 컴포넌트가 이에 해당된다면? 😱 밤을 새야 할까?
+-   이럴 때 사용하는 것이 바로 `...rest`이다. Rest Props로 위의 코드를 간소화할 수 있다.
+
+💾 App.js
+
+```js
+return (
+    <Button
+        onClick={() => {
+            console.log('클릭 이벤트 발생');
+        }}
+        onMouseMove={() => {
+            console.log('마우스 움직임');
+        }}
+        onMouseDown={() => {
+            console.log('마우스 다운');
+        }}
+    />
+);
+```
+
+💾 Button.js
+
+```js
+// 🤷‍♂️ 이렇게 간단하게 해결된다니 ?!
+function Button({ children, ...rest }) {
+    return <button {...rest}>{children}</button>;
+}
+```
