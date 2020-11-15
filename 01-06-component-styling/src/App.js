@@ -1,20 +1,48 @@
-import React, { useState } from 'react';
-import './App.scss';
-import CheckBox from './components/CheckBox';
+import React from 'react';
+import styled, { css } from 'styled-components';
+
+const Circle = styled.div`
+    width: 5rem;
+    height: 5rem;
+    background: ${(props) => props.color || 'black'};
+    border-radius: 50%;
+    ${(props) =>
+        props.huge &&
+        css`
+            width: 10rem;
+            height: 10rem;
+        ` /* 
+            🤷‍♂️
+            위 Template Literal에서 또 Props를 필요로 할 수가 있다. 
+            그런데 Template Literal만 찍어버리면 Props를 참조할 수 없으므로
+            styled-components에서 제공하는 css를 이용한다.
+            */}
+`;
 
 function App() {
-    const [check, setCheck] = useState(false);
-    const onChange = (e) => {
-        setCheck(e.target.checked);
-    };
     return (
-        <div>
-            <CheckBox onChange={onChange} checked={check}>
-                다음 약관에 모두 동의
-            </CheckBox>
-        </div>
+        <>
+            <Circle />
+            <Circle color='blue' huge />
+        </>
     );
 }
+
+export default App;
+
+// function App() {
+//     const [check, setCheck] = useState(false);
+//     const onChange = (e) => {
+//         setCheck(e.target.checked);
+//     };
+//     return (
+//         <div>
+//             <CheckBox onChange={onChange} checked={check}>
+//                 다음 약관에 모두 동의
+//             </CheckBox>
+//         </div>
+//     );
+// }
 
 // function App() {
 //     return (
@@ -74,5 +102,3 @@ function App() {
 //         </div>
 //     );
 // }
-
-export default App;
