@@ -212,3 +212,133 @@ export default Box;
 ```
 
 -   위와 같이 지정한다면 `_src_Box_module__Box`와 같이 클래스 이름이 고유화되어 클래스명이 지정된다.
+
+## 5. CSS in JS
+
+### styled-components
+
+-   `emotion`, `styled-jsx`, `jss` 등의 유사 라이브러리가 있으나 styled-components가 가장 인기가 많다.
+    -   그러나 이것이 곧 `styled-components`가 정답이라는 것을 의미하지는 않는다.
+-   `Tagged Template Literal` 문법을 사용하여 SCSS를 작성하면 된다.
+
+```js
+import React from 'react';
+import styled from 'styled-components';
+
+const Circle = styled.div`
+    width: 5rem;
+    height: 5rem;
+    background: black;
+    border-radius: 50%;
+`;
+
+function App() {
+    return <Circle />;
+}
+
+export default App;
+```
+
+-   🤷‍♂️ 잠깐만!! `Tagged Template Literal`이 뭐지?
+    -   구성을 완벽히 이해할 필요는 없다. 그러나 어떠한 원리로 돌아가는지 알면 좋기 때문에 학습하고자 함.
+
+#### Template Literal이란?
+
+다음과 같이 `Template Literal`을 사용하면 `hello react`처럼 의도한 결과를 출력시킬 수 있다.
+
+```js
+const name = 'react';
+const message = `hello ${name}`;
+console.log(message);
+// 결과: "hello react"
+```
+
+그런데 object를 이와 같이 사용하면 `[object Object]`라고 출력된다.
+
+```js
+const object = { a: 1 };
+const text = `${object}`;
+console.log(text);
+// "[object Object]"
+```
+
+function의 경우에도 선언 내용이 그대로 출력된다.
+
+```js
+const fn = () => true;
+const msg = `${fn}`;
+console.log(msg);
+// "() => true"
+```
+
+#### Tagged Template Literal이란?
+
+```js
+const red = '빨간색';
+const blue = '파란색';
+
+function favoriteColors(texts, ...values) {
+    console.log(texts); // text에서는 문자열이 들어간 대로 분리되어 담긴다.
+    console.log(values); // red, blue값이 배열로 담긴다.
+}
+
+favoriteColor`제가 좋아하는 색은 ${red}과 ${blue}입니다.`;
+// (3) ["제가 좋아하는 색은 ", "과" , "입니다.", raw: Array(3)]
+// (2) ["빨간색", "파란색"]
+```
+
+```js
+const red = '빨간색';
+const blue = '파란색';
+
+function favoriteColors(texts, ...values) {
+    return texts.reduce(
+        (result, text, i) => `${result}${text}${values[i] ? `<b>${values[i]}</b>` : ''}`,
+        ''
+    );
+}
+
+favoriteColors`제가 좋아하는 색은 ${red}과 ${blue}입니다.`;
+//제가 좋아하는 색은 <b>빨간색</b>과 <b>파란색</b>입니다.
+```
+
+바로 styled-components는 이러한 Tagged Template Literal의 원리를 활용한다.
+
+```js
+const StyledDiv = styled.div`
+    background: ${(props) => props.color};
+`;
+
+const MyComponent = () => <StyledDiv color='black' />;
+```
+
+```js
+function sample(texts, ...fns) {
+    const mockProps = {
+        title: '안녕하세요',
+        body: '내용은 내용내용입니다.',
+    };
+    return texts.reduce(
+        (result, text, i) => `${result}${text}${fns[i] ? fns[i](mockProps) : ''}`,
+        ''
+    );
+}
+sample`
+    제목: ${(props) => props.title}
+    내용: ${(props) => props.body}
+`;
+/*
+"
+    제목: 안녕하세요
+    내용: 내용은 내용내용입니다.
+"
+*/
+```
+
+1. 위에서 fns값에 담기는 내용은 함수이다.
+   1-1. `props => props.title` 함수
+   1-2. `props => props.body` 함수
+2. 바로 이 함수가 fns라는 배열에 담겨 reduce함수가 실행될 때
+   fns[i]에 따라 파라미터인 mockProps를 넘겨 함수가 실행되는 것이다.
+3. 1-1의 함수에 도달하였을 때는 title을 추출할 것이고
+4. 1-2의 함수에 도달하였을 때는 body를 추출할 것이다.
