@@ -1,5 +1,23 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { darken, lighten } from 'polished';
+
+const colorStyles = css`
+    /* 색상 */
+    // Props 안에 다음과 같이 작성도 가능하다.
+    ${({ theme, color }) => {
+        const selected = theme.palette[color];
+        return css`
+            background: ${selected};
+            &:hover {
+                background: ${lighten(0.1, selected)};
+            }
+            &:active {
+                background: ${darken(0.1, selected)};
+            }
+        `;
+    }}
+`;
 
 const StyledButton = styled.button`
     /* 공통 스타일 */
@@ -18,14 +36,7 @@ const StyledButton = styled.button`
     height: 2.25rem;
     font-size: 1rem;
 
-    /* 색상 */
-    background: #228be6;
-    &:hover {
-        background: #339af0;
-    }
-    &:active {
-        background: #1c7ed6;
-    }
+    ${colorStyles}
 
     /* 기타 */
     & + & {
@@ -33,8 +44,16 @@ const StyledButton = styled.button`
     }
 `;
 
-function StyleButton({ children, ...rest }) {
-    return <StyledButton {...rest}>{children}</StyledButton>;
+function StyleButton({ children, color, ...rest }) {
+    return (
+        <StyledButton color={color} {...rest}>
+            {children}
+        </StyledButton>
+    );
 }
+
+StyleButton.defaultProps = {
+    color: 'blue',
+};
 
 export default StyleButton;
