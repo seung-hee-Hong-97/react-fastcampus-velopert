@@ -1,6 +1,46 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { keyframes, css } from 'styled-components';
 import StyleButton from './StyleButton';
+
+const fadeIn = keyframes`
+    from{
+        opacity: 0;
+    }
+
+    to{
+        opacity: 1;
+    }
+`;
+
+const fadeOut = keyframes`
+    from{
+        opacity: 1;
+    }
+
+    to{
+        opacity: 0;
+    }
+`;
+
+const slideUp = keyframes`
+    from { 
+        transform: translateY(200px);
+    }
+
+    to{
+        transform: translateY(0px);
+    }
+`;
+
+const slideDown = keyframes`
+    from { 
+        transform: translateY(0px);
+    }
+    
+    to{
+        transform: translateY(200px);
+    }
+`;
 
 const DarkBackground = styled.div`
     position: fixed;
@@ -12,6 +52,17 @@ const DarkBackground = styled.div`
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.8);
+
+    animation-duration: 0.25s;
+    animation-timing-function: ease-out; //처음에 빨랐다가 나중에 느려지는 속성
+    animation-name: ${fadeIn};
+    animation-fill-mode: forwards;
+
+    ${(props) =>
+        props.disappear &&
+        css`
+            animation-name: ${fadeOut};
+        `}
 `;
 
 const DialogBlock = styled.div`
@@ -19,7 +70,6 @@ const DialogBlock = styled.div`
     padding: 1.5rem;
     background: white;
     border-radius: 2px;
-
     h3 {
         margin: 0;
         font-size: 1.5rem;
@@ -28,6 +78,17 @@ const DialogBlock = styled.div`
     p {
         font-size: 1.125rem;
     }
+
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out; //처음에 빨랐다가 나중에 느려지는 속성
+    animation-name: ${slideUp};
+    animation-fill-mode: forwards;
+
+    ${(props) =>
+        props.disappear &&
+        css`
+            animation-name: ${slideDown};
+        `}
 `;
 
 const ButtonGroup = styled.div`
@@ -44,10 +105,20 @@ const ShortMarginButton = styled(StyleButton)`
 `;
 
 function Dialog({ title, children, confirmText, cancelText, visible, onConfirm, onCancel }) {
-    if (!visible) return null;
+    const [animate, setAnimate] = useState(false);
+    const [localVisible, setLocalVisible] = useState(visible);
+
+    useEffect(() => {
+        if (localVisible && !visible) {
+            setAnimate(true);
+            setTimeout(() => setAnimate(false), 250);
+        }
+        setLocalVisible(visible);
+    }, [localVisible, visible]);
+    if (!localVisible && !animate) return null;
     return (
-        <DarkBackground>
-            <DialogBlock>
+        <DarkBackground disappear={!visible}>
+            <DialogBlock disappear={!visible}>
                 <h3>{title}</h3>
                 <p>{children}</p>
                 <ButtonGroup>
