@@ -15,8 +15,6 @@ const colorStyles = css`
             &:active {
                 background: ${darken(0.1, selected)};
             }
-<<<<<<< Updated upstream
-=======
             ${(props) =>
                 props.outline &&
                 css`
@@ -28,7 +26,6 @@ const colorStyles = css`
                         color: white;
                     }
                 `}
->>>>>>> Stashed changes
         `;
     }}
 `;
