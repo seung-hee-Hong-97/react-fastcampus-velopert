@@ -43,7 +43,6 @@ axios.post('/users', {
     - 지금은 코드가 길어보이지만 이 리듀서만을 따로 별도의 파일로 관리하여 재사용할 수 있다.
     - VSCODE에서 함수 이름에 오른쪽 버튼을 눌러 Refactor 기능을 이용하면 별도의 파일로 꺼낼 수 있음.
 
-
 # react-async를 사용하여 웹 요청하기
 
 -   [react-async](https://github.com/async-library/react-async)
