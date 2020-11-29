@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# 리액트 라우터 (react-router)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 라우팅
 
-## Available Scripts
+-   어떤 주소에 어떤 UI를 보여줄지 결정하는 것.
+-   non-SPA와 SPA의 관리 방식에 차이가 있다.
+    -   non-SPA
+        -   옛날에는 라우팅에 관련된 작업을 서버에서 처리했다.
+        -   경로에 따라 사용자가 서버측에 요청을 한다. 그에 따라 불필요한 트래픽이 유발될 수도 있음.
+    -   SPA
+        -   어떤 주소에서 어떤 페이지를 보여줄지를 Client단에서 결정한다. (∵ 이미 묶음 파일을 받아왔으니까!)
+        -   클라이언트가 웹 서버에 접속했을 때 UI에 관한 코드를 다 준비했으므로 필요한 데이터만 요청(Rest API wit Json)하므로 효율적으로 관리할 수 있다.
 
-In the project directory, you can run:
+## SPA의 단점
 
-### `npm start`
+-   앱의 규모가 커지면 JS파일의 크기가 너무 커질 수 있다.
+    -   Code Spliting을 이용하여 이 문제점을 해결한다. (react-loadable)
+-   브라우저에서 자바스크립트가 구동되지 않으면 UI를 볼 수가 없다.
+    -   브라우저에서 JS를 지원해야 한다는 의미이기도 하지만 검색엔진에서 크롤링을 할 수 없다는 의미이기도 하다.
+    -   이는 SSR 기법을 이용하여 해결한다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 리액트 라우터
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-   리액트 라우터는 컴포넌트를 기반으로 라우팅을 한다.
+    -   Next.js의 경우에는 SSR을 쉽게 구현할 수 있고 파일 경로와 이름을 기반으로 라우팅을 한다는 데에 차이가 있다.
 
-### `npm test`
+### 리액트 라우터에서 사용되는 주요 컴포넌트 살펴보기
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   <BrowserRouter>
+    -   HTML5 History API를 사용하면 주소만 바꾸고 페이지를 다시 불러오지 않는다.
+    - 주소만 바꾸고 페이지를 다시 불러오지는 않는다. (IE6~9는 미지원)
+-   <HashRouter>
+    - example/#/path/to/route
+    - #를 사용한다. 옛날 브라우저에서도 작동한다.
+-   <MemoryRouter>
+    - 브라우저의 주소와는 관계없다. 일절 건드리지 않는다.
+    - 임베디드 웹앱, 리액트 네이티브 등에서 사용한다.
+    - 특정 페이지만 리액트로 구현할 경우에도 사용함.
+-   <StaticRouter>
+    -  서버 사이드 렌더링에서 사용한다.
+-   <Route>
+       -  라우트(경로)를 정의할 때 사용하는 컴포넌트이다.
+-   <Link>
+    -  <a>태그로 구성되어 있는데 사용한 Router의 주소를 바꾼다. (새로고침은 하지 않음)
