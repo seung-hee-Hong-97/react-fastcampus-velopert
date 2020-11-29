@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import About from './About';
 import Home from './Home';
+import Profile from './Profile';
 
 function App() {
     return (
@@ -22,14 +23,19 @@ function App() {
                 <li>
                     <Link to='/about'>소개</Link>
                 </li>
+                <li>
+                    <Link to='/profiles/velopert'>사용자 정보</Link>
+                </li>
             </ul>
             {/* 
               🤷‍♂️ 주의사항
                   BrowserRouter 기준으로 /도 일치하고 /about도 일치할 수 있다.
                   따라서 /에는 exact라는 속성을 true로 설정해서 완전히 일치할 경우에만 보이도록 설정한다. 
             */}
+            <hr />
             <Route path='/' component={Home} exact />
             <Route path='/about' component={About} />
+            <Route path='/profiles/:username' component={Profile} />
         </div>
     );
 }
