@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import About from './About';
 import HistorySample from './HistorySample';
 import Home from './Home';
@@ -37,10 +37,20 @@ function App() {
                   따라서 /에는 exact라는 속성을 true로 설정해서 완전히 일치할 경우에만 보이도록 설정한다. 
             */}
             <hr />
-            <Route path='/' component={Home} exact />
-            <Route path='/about' component={About} />
-            <Route path='/profiles' component={Profiles} />
-            <Route path='/history' component={HistorySample} />
+            <Switch>
+                <Route path='/' component={Home} exact />
+                <Route path='/about' component={About} />
+                <Route path='/profiles' component={Profiles} />
+                <Route path='/history' component={HistorySample} />
+                <Route
+                    render={({ location }) => (
+                        <div>
+                            <h2>찾으시는 페이지가 없습니다.</h2>
+                            <p>{location.pathname} not found error</p>
+                        </div>
+                    )}
+                />
+            </Switch>
         </div>
     );
 }
