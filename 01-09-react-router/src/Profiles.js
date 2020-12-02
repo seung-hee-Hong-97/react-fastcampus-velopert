@@ -1,6 +1,7 @@
 import React from 'react';
 import Profile from './Profile';
 import { Link, NavLink, Route } from 'react-router-dom';
+import RouterHookSample from './RouterHookSample';
 
 function Profiles() {
     return (
@@ -38,6 +39,7 @@ function Profiles() {
                 render를 사용하면 Profiles 컴포넌트에 어떠한 값 (변수)가 선언돼 있을 때 바로 참조할 수 있다는 이점이 있음.
             */}
             <Route path='/profiles/:username' component={Profile} />
+            <RouterHookSample />
         </div>
     );
 }
