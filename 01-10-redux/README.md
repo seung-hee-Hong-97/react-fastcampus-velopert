@@ -45,3 +45,85 @@
     -   리덕스를 고집하지 않고 다른 라이브러리를 사용하는 것 또한 방법이다.
 
 리덕스가 편하게 느껴지는지 아닌지를 알기 위해서는 일단 배워봐야 알 것이다.
+
+# 리덕스에서 사용되는 키워드 숙지하기
+
+## 액션(Action)
+
+-   상태에 어떠한 변화가 필요할 때 액션(Action)을 발생시킨다.
+    -   하나의 객체로 표현된다.
+        ```js
+        {
+            type: 'TOGGLE_VALUE',
+            data: {
+                id: 0,
+                text: '리덕스 배우기',
+            }
+        }
+        ```
+        ```js
+        {
+            type: 'CHANGE_INPUT',
+            text: '안녕하세요',
+        }
+        ```
+    -   상태를 바꿀 때 어떻게 업데이트할 것인지를 정의하는 것이라고 할 수 있다.
+
+## 액션 생성함수 (Action Creator)
+
+-   액션을 만들어주는 함수. 파라미터를 받아와서 액션 객체를 만들어주는 함수이다.
+
+    ```js
+    export function addTodo(data) {
+        return {
+            type: 'ADD_TODO',
+            data,
+        };
+    }
+
+    /* 😁 화살표 함수로도 만들 수 있다. */
+    export const changeInput = (text) => ({
+        type: 'CHANGE_INPUT',
+        text,
+    });
+    ```
+
+## 리듀서 (Reducer)
+
+-   이전에 리듀서 훅을 사용했을 때의 개념과 완전히 같다.
+-   리듀서는 변화를 일으키는 함수이다.
+
+    ```js
+    /*
+        😁 action의 type이 무엇인지별로 다른 업데이트 작업을 한다. 
+        단, 객체의 경우에는 불변성을 유지해주는 작업을 반드시 수행해줘야 한다. 
+        ❌ 기존의 객체나 배열을 건드려서는 안 된다!
+        ❌ useReducer를 사용할 때는 default에 오류를 발생시킨 것과 달리 Redux에서는 
+            그대로 상태를 반환해야 한다.
+                - 왜냐하면 여러 개의 리듀서를 합쳐 루트 리듀서를 만들 수 있는기 때문이다(?)
+    */
+
+    function counter(state, action) {
+        switch (action.type) {
+            case 'INCREASE':
+                return state + 1;
+            case 'DECREASE':
+                return state - 1;
+            default:
+                return state;
+        }
+    }
+    ```
+
+## 스토어 (Store)
+
+-   1개의 Application당 1개의 스토어를 가진다.
+-   몇 가지 내장함수가 들어 있다.
+    1.  디스패치 `dispatch`: 액션을 발생시키는 것 or 액션을 Store에 전달하는 것
+        ```js
+        dispatch({ type: 'INCREASE' });
+        ```
+    2.  구독 `subscribe`
+        -   이 함수를 호출할 때 파라미터로 `특정 함수`를 넣어주면 액션이 `dispatch`될 때마다 해당 함수가 실행된다.
+        -   redux를 사용할 때 이 함수를 직접 사용할 일은 거의 없다.
+            하지만, react-redux가 제공하는 `connect` 함수 혹은 `useSelector` 훅을 사용하여 Store의 상태가 업데이트되면 컴포넌트를 리렌더링하도록 작업을 대신 처리해준다.
