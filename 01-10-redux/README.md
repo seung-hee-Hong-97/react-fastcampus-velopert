@@ -163,3 +163,12 @@
     -   이는 파일 안에 Action Type, Action 생성함수, Reducer 모두 몰아서 작성하는 것이다.
     -   단, Reducer의 경우에는 `export default`로 액션 생성함수는 `export`로 내보내 준다.
     -   처음에 배우는 과정에서 사용하면 굉장히 쉽다.
+
+## 그 밖에 참고
+
+-   `containers`: 컨테이너 컴포넌트는 리덕스에 있는 상태를 조회하거나 액션을 디스패치할 수 있는 컴포넌트를 의미한다.
+
+-   현재 프로젝트 리덕스 구조 - ![redux](./assets/react-redux-project-structure.png)
+-   [Presentational and Container Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
+    -   2019년에 컨테이너와 프레젠테이션 컴포넌트를 나눈 이유는 복잡한 로직을 분리시키기 위함이었지만, 훅스를 사용해도 비슷하게 작업할 수 있으므로 현재 시점에서 무조건 분리하는 것이 답은 아닌 것 같다고 주석을 남겼다.
+    -   컴포넌트를 분리하여 작성하는 것이 아직까지는 정석이다. 수많은 프로젝트가 아직까지는 이러한 방식으로 분리되어 작성하고 있다. 그러므로 이번 리덕스 강의에서는 컴포넌트를 프레젠테이셔널과 컨테이너로 분리하여 작성하는 것을 학습 목표로 한다.
