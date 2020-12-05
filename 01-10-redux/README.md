@@ -149,3 +149,17 @@
 -   동일한 입력 ▶ 동일한 출력
     -   `new Date()`, `Math.random()`, `axios.get()`과 같은 함수를 이용하면 동일한 출력을 보장받을 수 없다.
     -   이외에도 바깥에 있는 변수에 의존하는 것 또한 안 된다. 상수라면 변함없는 값이겠지만, 변수의 경우에는 값이 바뀌므로 결괏값이 달라질 수도 있다.
+
+# 리덕스 프로젝트 만들어 보기
+
+## 리덕스 모듈 만들기
+
+-   액션 타입
+-   액션 생성 함수
+-   리듀서
+
+-   Redux github repository의 [Todos Example](https://github.com/reduxjs/redux/tree/master/examples/todos/src)의 폴더 구조를 보면 `actions`와 `reducers`를 구분지어 사용하고 있는 것을 확인할 수 있다.
+-   그러나 본 프로젝트에서는 하나의 파일에 몰아서 작성해 보도록 할 것이다. (`Ducks 패턴`)
+    -   이는 파일 안에 Action Type, Action 생성함수, Reducer 모두 몰아서 작성하는 것이다.
+    -   단, Reducer의 경우에는 `export default`로 액션 생성함수는 `export`로 내보내 준다.
+    -   처음에 배우는 과정에서 사용하면 굉장히 쉽다.
