@@ -5,8 +5,7 @@ import counter from './counter';
 // 🤷‍♂️ counter, todos 모듈을 합치는 방법.
 const rootReducer = combineReducers({
     counter,
-    // todos,
+    todos,
 });
 
 export default rootReducer;
- 
