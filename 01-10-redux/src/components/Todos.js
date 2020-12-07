@@ -32,7 +32,7 @@ function Todos({ todos, onCreate, onToggle }) {
         리덕스를 사용해야 한다고 해서 모든 상태를 리덕스 스토어에서 관리해야 하는 것은 아니다.
     */
     const [text, setText] = useState('');
-    const onChange = (e) => setTexdt(e.target.value);
+    const onChange = (e) => setText(e.target.value);
     const onSubmit = (e) => {
         e.preventDefault();
         onCreate(text);
