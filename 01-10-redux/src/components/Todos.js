@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 /* 🎫 할 일의 목록에서 하나의 아이템 */
-function TodoItem({ todo, onToggle }) {
+const TodoItem = React.memo(function TodoItem({ todo, onToggle }) {
     return (
         <li
             style={{
@@ -12,10 +12,10 @@ function TodoItem({ todo, onToggle }) {
             {todo.text}
         </li>
     );
-}
+});
 
 /* 🎫 할 일의 목록을 보여주는 컴포넌트 */
-function TodoList({ todos, onToggle }) {
+const TodoList = React.memo(function TodoList({ todos, onToggle }) {
     return (
         <ul>
             {todos.map((todo) => (
@@ -23,7 +23,7 @@ function TodoList({ todos, onToggle }) {
             ))}
         </ul>
     );
-}
+});
 
 /* 🎫 할 일의 목록과 할일을 등록할 수 있는 텍스트 컴포넌트를 보여주는 총괄 컴포넌트 */
 function Todos({ todos, onCreate, onToggle }) {
@@ -50,4 +50,4 @@ function Todos({ todos, onCreate, onToggle }) {
     );
 }
 
-export default Todos;
+export default React.memo(Todos);
