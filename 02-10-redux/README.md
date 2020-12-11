@@ -36,3 +36,79 @@
 1. 프로젝트의 규모가 큰 경우
 2. 비동기 작업 처리가 많은 경우 (+Redux Middleware)
 3. 리덕스가 편하게 느껴지는 경우 (아닐 경우 Context API 혹은 MobX 등 사용)
+
+## 리덕스에서 사용되는 용어 📕
+
+1. 액션(ACtion)
+
+-   상태에 변화가 필요할 때 액션을 발생시킨다.
+-   액션은 객체이다.
+    ```js
+    const 액션1 = {
+        type: 'TOGGLE_VALUE',
+    };
+    const 액션2 = {
+        type: 'ADD_TODO',
+        data: {
+            id: 0,
+            texT: '리덕스 배우기',
+        },
+    };
+    ```
+
+2. 액션 생성함수 (Action Creator)
+
+```js
+export function addTodo(data) {
+    return {
+        type: 'ADD_TODO',
+        data,
+    };
+}
+
+// 화살표 함수로도 만들 수 있다.
+export const changeInput = (text) => ({
+    type: 'CHANGE_INPUT',
+    text,
+});
+```
+
+-   액션 생성함수를 사용하는 것이 필수적인 것은 아니다.
+-   그러나 액션 생성함수를 만들어 두면 편하게 액션을 만들 수 있다.
+-   액션 생성함수가 없으면 직접 액션을 작성해 주면 된다.
+
+3. 리듀서 (Reducer)
+
+-   Context API에서 만났던 그 친구와 개념이 동일하다.
+
+```js
+function counter(state, action) {
+    switch (action.type) {
+        case 'INCREASE':
+            return state + 1;
+        case 'DECREASE':
+            return state - 1;
+        default:
+            return state;
+    }
+}
+```
+
+🤷‍♂️📕 주의사항
+
+-   만약에 객체를 반환한다면 객체는 새로운 객체를 만들어 반환해야 한다.
+    -   객체는 불변성을 유지한다는 법칙이 리덕스에서 매우 중요하다.
+-   리덕스 리듀서에서는 default의 경우에는 기존의 상태 그대로를 반환해야 한다.
+    -   리덕스르 사용할 떄 여러 개의 리듀서를 만들고 루트 리듀서를 만들게 되는데 이때 유용하기 때문이다.
+
+4. 스토어 (Store)
+
+-   기본적으로 하나의 앱에 하나의 스토어만 들어있다고 생각하면 된다.
+-   몇 가지 내장함수가 들어 있다.
+    -   `dispatch`: 액션을 발생시키는 것 (액션을 store에 전달하는 것)
+        ```js
+        dispatch({ type: 'INCREASE' });
+        ```
+    -   `구독 (subscribe)`: 파라미터로 특정 함수를 넣어주면 액션이 dispatch될 때마다 호출된다.
+        store의 상태가 업데이트될 때마다 구독하고 있는 함수가 계속해서 호출된다는 뜻이다.
+        다만, 직접 구독 함수를 사용한다기보다는 `connect` 함수, `useSelect` 훅을 사용하여 Store상태가 업데이트되면 리렌더링되는 작업을 대신 처리해 준다.
