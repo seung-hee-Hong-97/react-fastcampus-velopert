@@ -134,3 +134,11 @@ function counter(state, action) {
       즉, 동일한 입력이 일어나도 결괏값은 동일해야 한다는 의미이다.
         - 따라서 new Date(), Math.random(), axios.get()과 같이 호출할 떄마다 다른 값을 가져오는 함수를 이용해서는 안 된다.
         - 바깥의 변수를 의존해서도 안 된다.
+
+## 리덕스 패턴
+
+### Ducks 패턴
+
+-   이번 프로젝트에서는 하나의 파일에 모아 작성할 것이다. 그것을 바로 `Ducks 패턴`이라 한다.
+    -   파일 안에 Action Type, Action 생성함수, Reducer 한 번에 작성한다.
+    -   Reducer는 `export default`로 선언하고 액션 생성함수는 `export`로 선언한다.
