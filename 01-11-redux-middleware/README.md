@@ -14,6 +14,37 @@
 -   주로 비동기 작업을 처리할 떄 사용한다.
     -   API 요청하기
 
+### 미들웨어 함수 작성 방법
+
+```js
+const middleware = (store) => (next) => (action) => {};
+
+function middleware(store) {
+    // store 객체
+    return function (next) {
+        // next는 미들웨어에서 액션을 받아왔을 때 다음 미들웨어에 전달하는 함수이다.
+        return function (action) {
+            // 액션 객체
+            // 하고 싶은 작업
+        };
+    };
+}
+```
+
+### redux-thunk
+
+```js
+const thunk = (store) => (next) => (action) =>
+    typeof action === 'function' ? action(store.dispatch, store.getState) : next(action);
+
+const myThink = () => (dispatch, getState) => {
+    dispatch({ type: 'HELLO' });
+    dispatch({ type: 'BYE' });
+};
+
+dispatch(myThunk());
+```
+
 ## 리덕스 미들웨어의 종류
 
 -   redux-thunk (✔ 튜토리얼에서 다룰 내용)
