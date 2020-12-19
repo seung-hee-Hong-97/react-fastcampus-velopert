@@ -66,9 +66,8 @@ const getComments = () => (dispatch, getState) => {
 
 // 컴포넌트에서 디스패치
 dispatch(getComments());
-```
-
 dispatch(myThunk());
+```
 
 ## 리덕스 미들웨어의 종류
 
