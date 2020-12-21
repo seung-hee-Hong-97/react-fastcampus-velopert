@@ -1,5 +1,5 @@
 import * as postsAPI from '../api/posts';
-import { reducerUtils } from '../lib/asyncUtils';
+import { createPromiseThunk, reducerUtils } from '../lib/asyncUtils';
 
 // 포스트 복수 개 불러오기
 // 특정 요청이 시작되었을 떄를 알리는 액션
@@ -14,33 +14,8 @@ const GET_POST = 'GET_POST';
 const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 const GET_POST_ERROR = 'GET_POST_ERROR';
 
-export const getPosts = () => async (dispatch) => {
-    // 1. 요청이 시작됨을 알림
-    dispatch({ type: GET_POSTS });
-    // 2. API 호출
-    try {
-        const posts = await postsAPI.getPosts();
-        // 3. 성공했을 떄
-        dispatch({ type: GET_POSTS_SUCCESS, posts });
-    } catch (error) {
-        // 4. 실패했을 때
-        dispatch({ type: GET_POSTS_ERROR, error });
-    }
-};
-
-export const getPost = (id) => async (dispatch) => {
-    // 1. 요청이 시작됨을 알림
-    dispatch({ type: GET_POST });
-    // 2. API 호출
-    try {
-        const post = await postsAPI.getPost(id);
-        // 3. 성공했을 떄
-        dispatch({ type: GET_POST_SUCCESS, post });
-    } catch (error) {
-        // 4. 실패했을 때
-        dispatch({ type: GET_POST_ERROR, error });
-    }
-};
+export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
+export const getPost = createPromiseThunk(GET_POST, postsAPI.getPostById);
 
 const initialState = {
     posts: reducerUtils.initial(),
@@ -57,12 +32,12 @@ export default function posts(state = initialState, action) {
         case GET_POSTS_SUCCESS:
             return {
                 ...state,
-                posts: reducerUtils.success(action.posts),
+                posts: reducerUtils.success(action.payload),
             };
         case GET_POSTS_ERROR:
             return {
                 ...state,
-                posts: reducerUtils.error(action.error),
+                posts: reducerUtils.error(action.payload),
             };
         case GET_POST:
             return {
@@ -72,12 +47,12 @@ export default function posts(state = initialState, action) {
         case GET_POST_SUCCESS:
             return {
                 ...state,
-                post: reducerUtils.success(action.post),
+                post: reducerUtils.success(action.payload),
             };
         case GET_POST_ERROR:
             return {
                 ...state,
-                post: reducerUtils.error(action.error),
+                post: reducerUtils.error(action.payload),
             };
         default:
             return state;
