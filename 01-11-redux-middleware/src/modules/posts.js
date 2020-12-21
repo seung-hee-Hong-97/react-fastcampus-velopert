@@ -1,5 +1,5 @@
 import * as postsAPI from '../api/posts';
-import { createPromiseThunk, reducerUtils } from '../lib/asyncUtils';
+import { createPromiseThunk, handleAsyncActions, reducerUtils } from '../lib/asyncUtils';
 
 // 포스트 복수 개 불러오기
 // 특정 요청이 시작되었을 떄를 알리는 액션
@@ -22,38 +22,18 @@ const initialState = {
     post: reducerUtils.initial(),
 };
 
+const getPostsReducer = handleAsyncActions(GET_POSTS, 'posts');
+const getPostReducer = handleAsyncActions(GET_POST, 'post');
 export default function posts(state = initialState, action) {
     switch (action.type) {
         case GET_POSTS:
-            return {
-                ...state,
-                posts: reducerUtils.loading(state.posts.data),
-            };
         case GET_POSTS_SUCCESS:
-            return {
-                ...state,
-                posts: reducerUtils.success(action.payload),
-            };
         case GET_POSTS_ERROR:
-            return {
-                ...state,
-                posts: reducerUtils.error(action.payload),
-            };
+            return getPostsReducer(state, action);
         case GET_POST:
-            return {
-                ...state,
-                post: reducerUtils.loading(),
-            };
         case GET_POST_SUCCESS:
-            return {
-                ...state,
-                post: reducerUtils.success(action.payload),
-            };
         case GET_POST_ERROR:
-            return {
-                ...state,
-                post: reducerUtils.error(action.payload),
-            };
+            return getPostReducer(state, action);
         default:
             return state;
     }
