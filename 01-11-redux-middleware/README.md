@@ -115,6 +115,28 @@ dispatch(getComments());
 dispatch(myThunk());
 ```
 
+-   thunk 함수의 예시
+
+```js
+const getComments = () => (dispatch, getState) => {
+    /*
+        이 안에서는 액션을 dispatch할 수 있고
+        getState를 상요하여 현재 상태를 조회할 수도 있다.
+    */
+    //요청이 시작되었음을 알리는 액션
+    dispatch({ type: 'GET_COMMENTS' });
+
+    //댓글을 조회하는 프라미스를 반환하는 getComments가 있다고 가정하자.
+    api.getComments(id) // 요청
+        .then((comments) => dispatch({ type: 'GET_COMMENTS_SUCCESS', id, comments })) // 성공
+        .catch((e) => dispatch({ type: 'GET_COMMENTS_ERROR', error: e })); // 실패한 경우
+};
+
+// 컴포넌트에서 디스패치
+dispatch(getComments());
+dispatch(myThunk());
+```
+
 ## 리덕스 미들웨어의 종류
 
 -   redux-thunk (✔ 튜토리얼에서 다룰 내용)
