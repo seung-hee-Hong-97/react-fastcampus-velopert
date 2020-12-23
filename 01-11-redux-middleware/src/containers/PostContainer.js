@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Post from '../components/Post';
-import { clearPost, getPost } from '../modules/posts';
+import { reducerUtils } from '../lib/asyncUtils';
+import { getPost } from '../modules/posts';
 
 function PostContainer({ postId }) {
-    const { data, loading, error } = useSelector((state) => state.posts.post);
+    const { data, loading, error } = useSelector(
+        (state) => state.posts.post[postId] || reducerUtils.initial()
+    );
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // if(data) return; // 데이터가 이미 있으면 아예 요청하고 싶지 않을 때
         dispatch(getPost(postId));
-
-        return () => {
-            dispatch(clearPost());
-        };
     }, [postId, dispatch]);
 
-    if (loading) return <div>로딩 중...</div>;
+    if (loading && !data) return <div>로딩 중...</div>;
     if (error) return <div>오류 발생: {error}</div>;
     if (!data) return null;
 
