@@ -106,3 +106,9 @@ dispatch(myThunk());
 -   redux-logger 사용하기
 -   redux-thunk 사용하기
 -   redux-saga 사용하기
+
+### JSON Server
+
+```
+npx json-server ./data.json --port 4000
+```
