@@ -107,7 +107,60 @@ dispatch(myThunk());
 -   redux-thunk 사용하기
 -   redux-saga 사용하기
 
-### JSON Server
+### redux-saga
+
+-   redux-thunk 다음으로 가장 많이 사용하는 비동기 작업 관련 미들웨어이다.
+-   redux-saga는 액션을 모니터링하고 있다가 특정 액션이 발생하면 그에 따라 특정 작업을 하는 방식으로 사용한다.
+    -   특정 작업은 특정 자바스크립트를 실행하거나 다른 액션을 실행하거나 상태를 조회하는 등의 작업이 포함된다.
+    -   예를들어 비동기 작업을 진행할 떄 기존 요청을 취소할 수 있다.
+    -   redux-thunk는 사용할 때 함수 타입의 값을 dispatch하는데 redux-saga에서는 순수 액션 객체를 사용하면서 이와 같은 작업을 수행할 수 있다.
+-   웹 소켓을 사용하면 Channel이라는 기능을 사용하여 더욱 효율적으로 코드를 관리할 수 있다.
+-   비동기 작업이 실패했을 떄 재시도하는 기능을 구현할 수도 있다.
+-   redux-saga는 자바스크립트의 `Generator` 문법을 사용한다.
+    -   redux-saga를 사용하기 이전에 이 문법을 선행학습
+-   Generator란?
+    -   함수의 흐름을 특정 구간에 멈춰놓았다가 나중에 다시 실행할 수 있다.
+    -   결괏값을 여러 번 내보낼 수 있다.
+    -   대략 다음과 같은 느낌
+    ```js
+    function weirdFunction(){
+        return 1;
+        return 2;
+        return 3;
+        return 4;
+        return 5;
+    ```
+    ```js
+    function* generatorFunction(){
+        console.log("안녕하세요?")
+        yield 1;
+        console.log("제너레이터 함수)
+        yield 2;
+        console.log("funciton *");
+        yield 3;
+        return 4;
+    }
+    ```
+    ```js
+    function* sumGenerator() {
+        console.log('sumGenerator가 시작되었습니다!');
+        let a = yield;
+        console.log('a 값을 받았습니다.');
+        let b = yield;
+        console.log('b값을 받았습니다.');
+        return a + b;
+    }
+    ```
+    ```js
+    function* infiniteAddGenerator() {
+        let result = 0;
+        while (true) {
+            result += yield result;
+        }
+    }
+    ```
+
+## JSON Server
 
 ```
 npx json-server ./data.json --port 4000
