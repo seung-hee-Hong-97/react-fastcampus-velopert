@@ -1,3 +1,46 @@
+import { call, put } from 'redux-saga/effects';
+
+export const createPromiseSaga = (type, promiseCreator) => {
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+    return function* saga(action) {
+        try {
+            const result = yield call(promiseCreator, action.payload);
+            yield put({
+                type: SUCCESS,
+                payload: result,
+            });
+        } catch (error) {
+            yield put({
+                type: ERROR,
+                error: true,
+                payload: error,
+            });
+        }
+    };
+};
+
+export const createPromiseSagaById = (type, promiseCreator) => {
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+    return function* saga(action) {
+        const id = action.meta;
+        try {
+            const result = yield call(promiseCreator, action.payload);
+            yield put({
+                type: SUCCESS,
+                payload: result,
+                meta: id,
+            });
+        } catch (error) {
+            yield put({
+                type: ERROR,
+                error: true,
+                payload: error,
+                meta: id,
+            });
+        }
+    };
+};
+
 export const createPromiseThunk = (
     /*요청이 시작했음을 알려주는 액션의 type*/ type,
     /*postAPI.getPost처럼 Promise를 만들어주는 함수*/ promiseCreator
