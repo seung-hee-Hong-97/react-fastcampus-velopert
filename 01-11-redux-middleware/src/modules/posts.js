@@ -8,7 +8,7 @@ import {
     handleAsyncActionsById,
     reducerUtils,
 } from '../lib/asyncUtils';
-import { call, getContext, put, takeEvery } from 'redux-saga/effects';
+import { call, getContext, put, takeEvery, select } from 'redux-saga/effects';
 
 // 포스트 복수 개 불러오기
 // 특정 요청이 시작되었을 떄를 알리는 액션
@@ -25,9 +25,11 @@ const GET_POST_ERROR = 'GET_POST_ERROR';
 const GO_TO_HOME = 'GO_TO_HOME';
 
 const CLEAR_POST = 'CLEAR_POST';
+const PRINT_STATE = 'PRINT_STATE';
 
 export const getPosts = () => ({ type: GET_POSTS });
 export const getPost = (id) => ({ type: GET_POST, payload: id, meta: id });
+export const printState = () => ({ type: PRINT_STATE });
 
 const getPostsSaga = createPromiseSaga(GET_POSTS, postsAPI.getPosts);
 const getPostSaga = createPromiseSagaById(GET_POST, postsAPI.getPostById);
@@ -35,11 +37,16 @@ function* goToHomeSaga() {
     const history = yield getContext('history');
     history.push('/');
 }
+function* printStateSaga() {
+    const state = yield select((state) => state.post);
+    console.log(state);
+}
 
 export function* postsSaga() {
     yield takeEvery(GET_POSTS, getPostsSaga);
     yield takeEvery(GET_POST, getPostSaga);
     yield takeEvery(GO_TO_HOME, goToHomeSaga);
+    yield takeEvery(PRINT_STATE, printStateSaga);
 }
 
 // export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
