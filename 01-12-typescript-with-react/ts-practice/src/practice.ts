@@ -13,8 +13,8 @@ const messages: string[] = ['hello', 'world'];
 
 let mightBeUndefined: string | undefined = undefined;
 let nullableNumber: number | null = 10; // 또는  null;
-let color: 'red' | 'orange' | 'yellow' = 'red';
-color = 'yellow';
+// let color: 'red' | 'orange' | 'yellow' = 'red';
+// color = 'yellow';
 // color = 'green'; // 할당할 수 없다는 오류가 뜬다
 
 // 함수 연습
