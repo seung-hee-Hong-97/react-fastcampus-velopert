@@ -23,3 +23,18 @@ value = null;
 
 [타입스크립트 원문](https://typescriptlang.org/docs/handbook/basic-types.html)
 [타입스크립트 한국어 번역본](https://typescript-kr.github.io)
+
+# typescript로 만든 react 프로젝트
+
+기존에는 다음과 같이 명령어를 사용하였다.
+
+```
+npx create-react-app 프로젝트명 --typescript
+```
+
+그러나 언제부터서인가 도입된 `--template` 옵션이 때문인지 create-react-app 사용법이 바뀌었다.
+따라서 다음부터는 이와 같이 `--template` 옵션을 사용하여 프로젝트를 생성하여야 한다.
+
+```
+npx create-react-app 프로젝트명 --template typescript
+```
