@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 
-/*
+type Action = { type: 'INCREASE' } | { type: 'DECREASE' };
+
+function reducer(state: number, action: Action): number {
+    switch (action.type) {
+        case 'INCREASE':
+            return state + 1;
+        case 'DECREASE':
+            return state - 1;
+        default:
+            throw new Error('Unhandled action type');
+    }
+}
+
+/* 
     🤷‍♂️ 헐!!!
     Typescript를 사용하든 사용하지 않든 코드에는 차이가 거의 없다... 
     그냥  Typescript를 쓴다는 것 하나만으로 겁만 먹었던 거야??? 😱
 */
 
 function Counter() {
-    const [count, setCount] = useState<number>(0); // 제네릭을 선언하지 않아도 무방
-    const onIncrease = () => setCount(count + 1);
-    const onDecrease = () => setCount(count - 1);
+    const [count, dispatch] = useReducer(reducer, 0);
+    const onIncrease = () => dispatch({ type: 'INCREASE' });
+    const onDecrease = () => dispatch({ type: 'DECREASE' });
 
     return (
         <div>
