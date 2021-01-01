@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Counter from './Counter';
+import ReducerSample from './ReducerSample';
 
 function App() {
-    return <Counter />;
+    return <ReducerSample />;
 }
 
 export default App;
