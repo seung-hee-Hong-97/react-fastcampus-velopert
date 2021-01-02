@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
 import ReducerSample from './ReducerSample';
+import { SampleProvider } from './SampleContext';
 
 function App() {
-    return <ReducerSample />;
+    return (
+        <SampleProvider>
+            <ReducerSample />
+        </SampleProvider>
+    );
 }
 
 export default App;
