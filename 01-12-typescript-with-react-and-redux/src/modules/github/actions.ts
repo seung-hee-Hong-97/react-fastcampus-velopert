@@ -16,4 +16,8 @@ export const getUserProfileAsync = createAsyncAction(
     GET_USER_PROFILE,
     GET_USER_PROFILE_SUCCESS,
     GET_USER_PROFILE_ERROR
-)<undefined, GithubProfile, AxiosError>();
+)<any, GithubProfile, AxiosError>();
+/*
+    강의에서는 <undefined, GithubProfile, AxiosError>라고 했지만 typesafe-actions가 5.1.버전 대에서는 작동하지 않음.
+    따라서 임시방편으로 any 타입 기재
+*/
