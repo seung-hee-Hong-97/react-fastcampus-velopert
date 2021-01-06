@@ -2,13 +2,9 @@ import { createAction, ActionType, createReducer } from 'typesafe-actions';
 // createStandardAction was renamed to createAction and .map method was removed in favor of simpler redux-actions style API. (5.1.0)
 // https://github.com/piotrwitek/typesafe-actions/releases
 
-const INCREASE = 'counter/INCREASE';
-const DECREASE = 'counter/DECREASE';
-const INCREASE_BY = 'counter/INCREASE_BY';
-
-export const increase = createAction(INCREASE)();
-export const decrease = createAction(DECREASE)();
-export const increaseBy = createAction(INCREASE_BY)<number>();
+export const increase = createAction('counter/INCREASE')();
+export const decrease = createAction('counter/DECREASE')();
+export const increaseBy = createAction('counter/INCREASE_BY')<number>();
 
 type CounterState = {
     count: number;
