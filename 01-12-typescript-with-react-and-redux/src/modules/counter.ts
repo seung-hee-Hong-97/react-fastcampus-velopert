@@ -21,13 +21,19 @@ const initialState: CounterState = {
 const actions = { increase, decrease, increaseBy };
 type CounterAction = ActionType<typeof actions>;
 
-const counter = createReducer<CounterState, CounterAction>(initialState, {
-    [INCREASE]: (state) => ({ count: state.count + 1 }),
-    [DECREASE]: (state) => ({ count: state.count - 1 }),
-    [INCREASE_BY]: (state, action) => ({
-        count: state.count + action.payload,
-    }),
-});
+const counter = createReducer<CounterState, CounterAction>(initialState)
+    //#1. 메서드 체이닝
+    .handleAction(increase, (state) => ({ count: state.count + 1 }))
+    .handleAction(decrease, (state) => ({ count: state.count - 1 }))
+    .handleAction(increaseBy, (state, action) => ({ count: state.count + action.payload }));
+// #2.  object 방식
+// , {
+// [INCREASE]: (state) => ({ count: state.count + 1 }),
+// [DECREASE]: (state) => ({ count: state.count - 1 }),
+// [INCREASE_BY]: (state, action) => ({
+//     count: state.count + action.payload,
+// }),
+// });
 
 // function counter(state: CounterState = initialState, action: CounterAction): CounterState {
 //     switch (action.type) {
