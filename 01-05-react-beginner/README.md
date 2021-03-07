@@ -19,6 +19,29 @@
 
 ## 1. 📕 JSX 작성 규칙
 
+-   ※ 참고: 리액트에서 컴포넌트의 생김새를 정의할 때 사용하는 `문법`이고 이도 사실은 자바스크립트이다.
+    -   바벨이라는 도구를 사용하여 자바스크립트 코드로 변환을 하는 과정을 거치게 된다.
+
+```js
+<div>
+    <strong>Hello</strong>,<span>React</span>
+</div>
+```
+
+```js
+'use strict';
+
+/*#__PURE__*/
+React.createElement(
+    'div',
+    null,
+    // React.createElement를 이용하여 React 컴포넌트를 만든다.
+    /*#__PURE__*/ React.createElement('strong', null, 'Hello'),
+    ',',
+    /*#__PURE__*/ React.createElement('span', null, 'React')
+);
+```
+
 1. 태그는 반드시 닫혀야 한다.
     - input, br 같은 경우 `<input />`, `<br />` 등 `self closing` 태그를 이용하면 된다.
 2. 2개 이상의 태그는 하나 이상의 태그로 감싸져야만 한다.
