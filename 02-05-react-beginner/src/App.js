@@ -7,9 +7,8 @@ function App() {
     return (
         <div className='App'>
             <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
                 <p>리액트 프로젝트 만들기</p>
-                <Hello name='react' color='red' />
+                <Hello name='react' color='red' isSpecial={true} />
                 <Hello color='pink' />
                 <Wrapper>뤠퍼</Wrapper>I ❤ React
                 <div className='gray-box'></div>
