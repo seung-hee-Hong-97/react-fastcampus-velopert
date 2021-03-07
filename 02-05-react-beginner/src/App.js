@@ -17,6 +17,7 @@ function App() {
                 >
                     I ❤ React
                 </a>
+                <div className='gray-box'></div>
             </header>
         </div>
     );
