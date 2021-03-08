@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function InputSample() {
     const [inputs, setInputs] = useState({
         name: '',
         nickname: '',
     });
+    const nameInput = useRef();
     const { name, nickname } = inputs;
     const onChange = (event) => {
         const { name, value } = event.target;
@@ -12,10 +13,20 @@ function InputSample() {
         // 이를 불변성을 지켜줘야만 컴포넌트 업데이트 최적화를 할 수 있다.
         setInputs({ ...inputs, [name]: value });
     };
-    const onReset = () => setInputs({ name: '', nickname: '' });
+    const onReset = () => {
+        setInputs({ name: '', nickname: '' });
+        nameInput.current.focus();
+    };
     return (
         <div>
-            <input type='text' placeholder='이름' name='name' onChange={onChange} value={name} />
+            <input
+                type='text'
+                ref={nameInput}
+                placeholder='이름'
+                name='name'
+                onChange={onChange}
+                value={name}
+            />
             <input
                 type='text'
                 placeholder='닉네임'
