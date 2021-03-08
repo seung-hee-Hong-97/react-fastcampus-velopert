@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
 
 function InputSample() {
-    const [text, setText] = useState('');
-
+    const [inputs, setInputs] = useState({
+        name: '',
+        nickname: '',
+    });
+    const { name, nickname } = inputs;
     const onChange = (event) => {
-        console.log(event.target); //이벤트가 발생한 곳의 정보(DOM)를 가지고 있음.
-        console.log(event.target.value); // 값 조회하기
-        setText(event.target.value);
+        const { name, value } = event.target;
+        // 🧙‍♂️ 객체 상태를 업데이트할 때는 반드시 새로운 객체를 만들어야 한다.
+        // 이를 불변성을 지켜줘야만 컴포넌트 업데이트 최적화를 할 수 있다.
+        setInputs({ ...inputs, [name]: value });
     };
-
-    const onReset = () => setText('');
-
+    const onReset = () => setInputs({ name: '', nickname: '' });
     return (
         <div>
-            <input type='text' onChange={onChange} value={text} />
+            <input type='text' placeholder='이름' name='name' onChange={onChange} value={name} />
+            <input
+                type='text'
+                placeholder='닉네임'
+                name='nickname'
+                onChange={onChange}
+                value={nickname}
+            />
             <button onClick={onReset}>초기화</button>
             <div>
-                <b>값: {text}</b>
+                <b>값: {`${name}(${nickname})`}</b>
             </div>
         </div>
     );
