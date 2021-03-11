@@ -246,7 +246,7 @@ useEffect(() => {
 -   형식
     ```js
     dispatch({
-        type: 'increment',
+        type: 'INCREMENT',
         diff: 4,
     });
     ```
