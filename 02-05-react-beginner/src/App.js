@@ -1,7 +1,19 @@
 import React, { useRef, useReducer, useMemo, useCallback, createContext } from 'react';
+import produce from 'immer';
 import './App.css';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
+
+// window.produce = produce; // 개발자 도구에서 사용하기
+
+/*
+    🧙‍♂️ 사용 예제
+    const array = [{id: 1, text: 'hello'}, {id: 2, text:'bye'},{id:3, text:'lalabla'}];
+    const nextArray = produce(array, draft => {
+        draft.push({id: 4, text: 'blabla'});
+        draft[0].text = draft[0].text + ' world';
+    });
+*/
 
 function countActiveUsers(users) {
     console.log('활성 사용자를 세는 중');
