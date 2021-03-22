@@ -92,6 +92,13 @@ function App() {
             <div>활성 사용자 수: {count}</div>
         </UserDispatch.Provider>
     );
+
+    /*#__PURE__*/
+    // React.createElement(UserDispatch.Provider, {
+    //     value: dispatch
+    // }, /*#__PURE__*/React.createElement(CreateUser, null), /*#__PURE__*/React.createElement(UserList, {
+    //     users: users
+    // }), /*#__PURE__*/React.createElement("div", null, "\uD65C\uC131 \uC0AC\uC6A9\uC790 \uC218: ", count));
 }
 
 export default App;
