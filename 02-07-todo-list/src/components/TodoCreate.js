@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+import { useTodoDispatch, useTodoNextId } from '../TodoContext';
 
 const CircleButton = styled.button`
     background: #38d9a9;
@@ -72,9 +73,28 @@ const Input = styled.input`
     box-sizing: border-box;
 `;
 
-function TodoCreate({ onSubmit, onChange, value }) {
+function TodoCreate() {
     const [open, setOpen] = useState(false);
+    const [value, setValue] = useState('');
+    const dispatch = useTodoDispatch();
+    const nextId = useTodoNextId();
+
     const onToggle = () => setOpen(!open);
+    const onChange = (e) => setValue(e.target.value);
+    const onSubmit = (e) => {
+        e.preventDefault();
+        dispatch({
+            type: 'CREATE',
+            todo: {
+                id: nextId.current,
+                text: value,
+                done: false,
+            },
+        });
+        setValue('');
+        setOpen(false);
+        nextId.current += 1;
+    };
 
     return (
         <>
@@ -97,4 +117,6 @@ function TodoCreate({ onSubmit, onChange, value }) {
     );
 }
 
-export default TodoCreate;
+// TodoCreate에서는 Props로 받아오는 게 없잖아? 그러니까 React.memo를 쓰게 되면 효율적이겠지!
+// React.memo => Props가 바뀌었을 때만 렌더링
+export default React.memo(TodoCreate);
