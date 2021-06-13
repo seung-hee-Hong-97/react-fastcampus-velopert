@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
 
 function InputSample() {
-    const [text, setText] = useState('');
+    // 나중에 이를 이용하여 커스텀 훅을 만들어 주는 것이 중요하겠지!
+    const [inputs, setInputs] = useState({
+        name: '',
+        nickname: '',
+    });
+
+    const { name, nickname } = inputs;
 
     const onChange = (e) => {
-        setText(e.target.value);
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name]: value,
+        });
     };
 
     const onReset = () => {
-        setText('');
+        setInputs({
+            name: '',
+            nickname: '',
+        });
     };
 
     return (
         <div>
-            <input type='text' onChange={onChange} value={text} />
+            <input name='name' placeholder='이름' onChange={onChange} value={name} />
+            <input name='nickname' placeholder='닉네임' onChange={onChange} value={nickname} />
             <button onClick={onReset}>초기화</button>
             <div>
                 <b>값:</b>
-                {text}
+                {name}({nickname})
             </div>
         </div>
     );
