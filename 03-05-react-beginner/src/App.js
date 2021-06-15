@@ -64,28 +64,22 @@ function App() {
         nextId.current += 1;
     }, [username, email]);
 
-    const onRemove = useCallback(
-        (id) => {
-            setUsers(users.filter((user) => user.id !== id));
-        },
-        [users]
-    );
+    const onRemove = useCallback((id) => {
+        setUsers((users) => users.filter((user) => user.id !== id));
+    }, []);
 
-    const onToggle = useCallback(
-        (id) => {
-            setUsers(
-                users.map((user) =>
-                    user.id === id
-                        ? {
-                              ...user,
-                              active: !user.active,
-                          }
-                        : user
-                )
-            );
-        },
-        [users]
-    );
+    const onToggle = useCallback((id) => {
+        setUsers((users) =>
+            users.map((user) =>
+                user.id === id
+                    ? {
+                          ...user,
+                          active: !user.active,
+                      }
+                    : user
+            )
+        );
+    }, []);
 
     // 특정 값이 바뀔 때만 특정 함수를 실행하여 연산 / 원하는 값이 바뀌지 않았다면 값을 재사용
     // ex) input상자에 텍스트를 입력할 때마다 리렌더링이되는데 이때는 활성 사용자 수의 상태가 변하지 않으므로 함수를 재실행하지않고 값을 재사용한다.
