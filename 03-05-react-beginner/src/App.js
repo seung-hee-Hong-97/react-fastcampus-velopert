@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
 
@@ -14,13 +14,16 @@ function App() {
     });
 
     const { username, email } = inputs;
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setInputs({
-            ...inputs,
-            [name]: value,
-        });
-    };
+    const onChange = useCallback(
+        (e) => {
+            const { name, value } = e.target;
+            setInputs({
+                ...inputs,
+                [name]: value,
+            });
+        },
+        [inputs]
+    );
 
     const [users, setUsers] = useState([
         {
@@ -46,36 +49,43 @@ function App() {
     // 리렌더링되지 않는 값으로 관리할 수도 있음.
     const nextId = useRef(4);
 
-    const onCreate = () => {
+    // 컴포넌트가 리렌더링될 때마다 새로운 함수를 만들고 있었다.
+    const onCreate = useCallback(() => {
         const user = {
             id: nextId.current,
             username,
             email,
         };
-        setUsers([...users, user]);
+        setUsers((users) => [...users, user]);
         setInputs({
             username: '',
             email: '',
         });
         nextId.current += 1;
-    };
+    }, [username, email]);
 
-    const onRemove = (id) => {
-        setUsers(users.filter((user) => user.id !== id));
-    };
+    const onRemove = useCallback(
+        (id) => {
+            setUsers(users.filter((user) => user.id !== id));
+        },
+        [users]
+    );
 
-    const onToggle = (id) => {
-        setUsers(
-            users.map((user) =>
-                user.id === id
-                    ? {
-                          ...user,
-                          active: !user.active,
-                      }
-                    : user
-            )
-        );
-    };
+    const onToggle = useCallback(
+        (id) => {
+            setUsers(
+                users.map((user) =>
+                    user.id === id
+                        ? {
+                              ...user,
+                              active: !user.active,
+                          }
+                        : user
+                )
+            );
+        },
+        [users]
+    );
 
     // 특정 값이 바뀔 때만 특정 함수를 실행하여 연산 / 원하는 값이 바뀌지 않았다면 값을 재사용
     // ex) input상자에 텍스트를 입력할 때마다 리렌더링이되는데 이때는 활성 사용자 수의 상태가 변하지 않으므로 함수를 재실행하지않고 값을 재사용한다.
