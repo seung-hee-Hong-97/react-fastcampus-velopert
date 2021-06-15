@@ -22,11 +22,11 @@ function User({ user, onRemove, onToggle }) {
     // }, []);
 
     useEffect(() => {
-        console.log('user 값이 설정됨');
-        console.log(user); // user의 객체가 새로 마운트되거나 혹은 기존의 객체에 변경이 일어날 때 호출됨
+        // console.log('user 값이 설정됨');
+        // console.log(user); // user의 객체가 새로 마운트되거나 혹은 기존의 객체에 변경이 일어날 때 호출됨
         return () => {
-            console.log('user 값이 바뀌기 전');
-            console.log(user);
+            // console.log('user 값이 바뀌기 전');
+            // console.log(user);
         };
     }, [user]); // dependencies가 없으면 모든 컴포넌트에 대해 출력을 반환함
 

@@ -1,6 +1,11 @@
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
+
+function countActiveUsers(users) {
+    console.log('활성 사용자를 세는 중..');
+    return users.filter((user) => user.active).length;
+}
 
 function App() {
     const [inputs, setInputs] = useState({
@@ -72,10 +77,14 @@ function App() {
         );
     };
 
+    // 특정 값이 바뀔 때만 특정 함수를 실행하여 연산 / 원하는 값이 바뀌지 않았다면 값을 재사용
+    // ex) input상자에 텍스트를 입력할 때마다 리렌더링이되는데 이때는 활성 사용자 수의 상태가 변하지 않으므로 함수를 재실행하지않고 값을 재사용한다.
+    const count = useMemo(() => countActiveUsers(users), [users]);
     return (
         <>
             <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />
             <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
+            <div>활성 사용자 수: {count}</div>
         </>
     );
 }
