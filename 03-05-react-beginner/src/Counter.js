@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
+
+// 👇 봐봐 절대 Counter 컴포넌트 안에 있지 않아.
+// 그 말은 다른 파일로도 분리시킬 수 있다는 거야!
+function reducer(state, action) {
+    switch (action.type) {
+        case 'INCREMENT':
+            return state + 1;
+        case 'DECREMENT':
+            return state - 1;
+        default:
+            throw new Error('Unhandled Action');
+    }
+}
 
 function Counter() {
-    const [number, setNumber] = useState(0);
-
+    const [number, dispatch] = useReducer(reducer, 0);
     const onIncrease = () => {
-        setNumber((prevNumber) => prevNumber + 1);
+        dispatch({ type: 'INCREMENT' });
     };
 
     const onDecrease = () => {
-        setNumber(number - 1);
+        dispatch({ type: 'DECREMENT' });
     };
 
     return (
