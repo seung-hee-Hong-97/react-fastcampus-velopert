@@ -1,6 +1,9 @@
 import React, { useReducer, createContext } from 'react';
+import produce from 'immer';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
+import FunctionalComponent from './FunctionalComponent'
+window.produce = produce;
 
 function reducer(state, action) {
     switch (action.type) {
@@ -58,6 +61,7 @@ function App() {
 
     return (
         <UserDispatch.Provider value={dispatch}>
+            <FunctionalComponent/>
             <CreateUser />
             <UserList users={users} />
             <div>활성 사용자 수: {users.filter((user) => user.active).length}</div>
