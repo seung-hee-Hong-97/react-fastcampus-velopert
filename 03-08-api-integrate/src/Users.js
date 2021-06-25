@@ -1,31 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import axios from 'axios';
-
-// LOADING, SUCCESS, ERROR
-function reducer(state, action) {
-    switch (action.type) {
-        case 'LOADING':
-            return {
-                loading: true,
-                data: null,
-                error: null,
-            };
-        case 'SUCCESS':
-            return {
-                loading: false,
-                data: action.data,
-                error: null,
-            };
-        case 'ERROR':
-            return {
-                loading: false,
-                data: null,
-                error: action.error,
-            };
-        default:
-            throw new Error(`Unhandled Action Type : ${action.type}`);
-    }
-}
+import { reducer } from './reducer';
 
 function Users() {
     const [state, dispatch] = useReducer(reducer, {
