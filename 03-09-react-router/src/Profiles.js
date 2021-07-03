@@ -1,5 +1,6 @@
 import React from 'react';
 import Profile from './Profile';
+// import WithRouterSample from './WithRouterSample';
 import { Link, Route } from 'react-router-dom';
 
 function Profiles() {
@@ -27,6 +28,8 @@ function Profiles() {
             />
             {/* path를 Path로 쓰면 어떻게 해... ㅠㅠㅠㅠ */}
             <Route path='/profiles/:username' component={Profile} />
+
+            {/* <WithRouterSample /> */}
         </div>
     );
 }
