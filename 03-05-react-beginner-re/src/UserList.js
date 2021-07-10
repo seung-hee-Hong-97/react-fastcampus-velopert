@@ -1,23 +1,5 @@
 import React from 'react';
 
-const users = [
-    {
-        id: 1,
-        username: 'gildong',
-        email: 'gildong@hong.com',
-    },
-    {
-        id: 2,
-        username: 'homer',
-        email: 'homer@example.com',
-    },
-    {
-        id: 3,
-        username: 'liz',
-        email: 'liz@example.com',
-    },
-];
-
 function User({ user: { id, username, email } }) {
     return (
         <div>
@@ -27,7 +9,7 @@ function User({ user: { id, username, email } }) {
     );
 }
 
-function UserList() {
+function UserList({ users }) {
     return (
         <div>
             {users.map((user) => (
