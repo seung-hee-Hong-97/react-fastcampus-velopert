@@ -1,38 +1,56 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import CreateUser from './CreateUser';
 import InputSample from './InputSample';
 import UserList from './UserList';
 
-const users = [
-    {
-        id: 1,
-        username: 'gildong',
-        email: 'gildong@hong.com',
-    },
-    {
-        id: 2,
-        username: 'homer',
-        email: 'homer@example.com',
-    },
-    {
-        id: 3,
-        username: 'liz',
-        email: 'liz@example.com',
-    },
-];
-
 function App() {
+    const [users, setUsers] = useState([
+        {
+            id: 1,
+            username: 'gildong',
+            email: 'gildong@hong.com',
+        },
+        {
+            id: 2,
+            username: 'homer',
+            email: 'homer@example.com',
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+        },
+    ]);
+
+    const [inputs, setInputs] = useState({
+        username: '',
+        email: '',
+    });
+    const { username, email } = inputs;
     const nextId = useRef(4);
 
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name]: value,
+        });
+    };
     const onCreate = () => {
-        console.log(nextId.current);
+        setInputs({
+            username: '',
+            email: '',
+        });
+
+        setUsers([...users, { id: nextId.current, username, email }]);
         nextId.current += 1; // 값이 바뀌더라도 리렌더링되지 않는다.
     };
 
     return (
-        <div className='App'>
-            <InputSample />
+        <>
+            <CreateUser username={username} email={email} onCreate={onCreate} onChange={onChange} />
             <UserList users={users} />
-        </div>
+        </>
     );
 }
 
