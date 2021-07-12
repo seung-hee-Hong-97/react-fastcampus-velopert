@@ -36,6 +36,7 @@ function App() {
             [name]: value,
         });
     };
+
     const onCreate = () => {
         setInputs({
             username: '',
@@ -46,10 +47,14 @@ function App() {
         nextId.current += 1; // 값이 바뀌더라도 리렌더링되지 않는다.
     };
 
+    const onRemove = (id) => {
+        setUsers((users) => users.filter((user) => user.id !== id));
+    };
+
     return (
         <>
             <CreateUser username={username} email={email} onCreate={onCreate} onChange={onChange} />
-            <UserList users={users} />
+            <UserList users={users} onRemove={onRemove} />
         </>
     );
 }
